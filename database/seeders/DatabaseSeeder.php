@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,11 +14,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $customers = \App\Models\Customer::factory(50)->create();
+        $products = \App\Models\Product::factory(20)->create();
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // 2. Créer 1000 commandes aléatoires pour l'historique
+        for ($i = 0; $i < 1000; $i++) {
+            $product = $products->random();
+            $qty = rand(1, 5);
+
+            \App\Models\Order::factory()->create([
+                'customer_id' => $customers->random()->id,
+                'product_id' => $product->id,
+                'quantity' => $qty,
+                'total_amount' => $product->price * $qty,
+                'order_date' => fake()->dateTimeBetween('-2 years', 'now'),
+            ]);
+        }
+
     }
 }

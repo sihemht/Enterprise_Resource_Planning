@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Product;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends Factory<Product>
+ */
+class ProductFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'name' => fake()->word(). ' ' . fake()->randomElement(['Pro', 'Elite', 'Standard']),
+            'category' => fake()->randomElement(['VTT', 'Route' , 'Standard']),
+            'price' => fake()->randomFloat(2, 50, 3000),
+            'stock_quantity' => fake()->numberBetween(0, 100),
+        ];
+    }
+}
