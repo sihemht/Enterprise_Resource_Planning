@@ -18,5 +18,9 @@ print("\nChiffre d'affaires par catégorie :")
 print(sales_by_category)
 
 print("\nChiffre d'affaires en France :")
-french_sales = sales_data[sales_data['customer_country'] == 'France']
+french_sales = sales_data[sales_data['customer_country'] == 'Finland']
 print(french_sales)
+
+
+#print("\nListe des pays clients détectés :")
+#print(sales_data['customer_country'].unique())
