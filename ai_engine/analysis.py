@@ -1,26 +1,31 @@
 import pandas as pd
+import os
 
-#Charger les données DataFrame
-sales_data = pd.read_csv('storage/app/orders_data.csv')
+file_path = '/var/www/storage/app/orders_data.csv'
 
-print("---- ANALYSE DE L'HISTORIQUE DES VENTES ----")
+if os.path.exists(file_path):
+    #Chargement du csv
+    sales_data = pd.read_csv(file_path)
 
-sales_by_product = sales_data.groupby('product')['quantity'].sum().sort_values(ascending=False)
+    #Pretraitement : convertir la colone "date" en date
+    sales_data['date'] = pd.to_datetime(sales_data['date'])
 
-print("Quantités totales vendues par article :")
-print(sales_by_product)
+    print("--- ANALYSE DE SAISONALITE---")
 
-# 3. Analyser la performance par catégorie
-# Pour savoir si les 'VTT' se vendent mieux que les 'Accessoires'
-sales_by_category = sales_data.groupby('category')['amount'].sum()
+    #Identifier les pics, ventes par mois
+    #cree une colone month
+    sales_data['month'] = sales_data['date'].dt.to_period('M')
+    monthly_sales = sales_data.groupby('month')['quantity'].sum()
 
-print("\nChiffre d'affaires par catégorie :")
-print(sales_by_category)
+    print("Ventes mensuelles globales :")
+    print(monthly_sales)
 
-print("\nChiffre d'affaires en France :")
-french_sales = sales_data[sales_data['customer_country'] == 'Finland']
-print(french_sales)
+    #Prediction simple
+    #tendence des 3 derniers mois pour predire le mois prochain
+    last_3_months_avg = monthly_sales.tail(3).mean()
 
+    print(f"\nPrédiction de demande pour le mois prochain : {round(last_3_months_avg, 2)} unités")
 
-#print("\nListe des pays clients détectés :")
-#print(sales_data['customer_country'].unique())
+else:
+    print("Fichier CSV introuvable. Lance 'docker compose exec app php  artisan app:export-orders-to-c-s-v' d'abord.")
+
