@@ -1,3 +1,4 @@
+![CI/CD Pipeline](https://github.com/sihemht/Enterprise_Resource_Planning/actions/workflows/main.yml/badge.svg)
 # 🚀 Smart-ERP : Gestion Commerciale & IA Prédictive
 
 ![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
