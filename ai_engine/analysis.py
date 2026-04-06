@@ -27,5 +27,5 @@ if os.path.exists(file_path):
     print(f"\nPrédiction de demande pour le mois prochain : {round(last_3_months_avg, 2)} unités")
 
 else:
-    print("Fichier CSV introuvable. Lance 'docker compose exec app php  artisan app:export-orders-to-c-s-v' d'abord.")
+    print("Fichier CSV introuvable. Lancer 'docker compose exec app php  artisan app:export-orders-to-c-s-v'")
 
