@@ -40,7 +40,7 @@ class DashboardController extends Controller
             'customers_count' => Customer::count(),
             'products_count' => Product::count(),
             'top_products' => $topProducts,
-            'ai_stock_predictions' => $stockAlerts // <--- Ton nouveau flux IA
+            'ai_stock_predictions' => $stockAlerts // <--- flux IA
         ]);
     }
 }
